@@ -12,16 +12,16 @@ class Graph:
             parent[i] = self.find(parent, parent[i])
         return parent[i]
 
-    def union(self, parent, rank, x, y):
+    def union(self, parent, livel, x, y):
 
-        if rank[x] < rank[y]:
+        if livel[x] < livel[y]:
             parent[x] = y
-        elif rank[x] > rank[y]:
+        elif livel[x] > livel[y]:
             parent[y] = x
 
         else:
             parent[y] = x
-            rank[x] += 1
+            livel[x] += 1
 
     def kurskalmst(self):
 
@@ -32,10 +32,10 @@ class Graph:
         self.graph = sorted(self.graph, key=lambda item: item[2])
 
         parent = []
-        rank = []
+        livel = []
         for node in range(self.V):
             parent.append(node)
-            rank.append(0)
+            livel.append(0)
 
         while e < self.V - 1:
 
@@ -47,7 +47,7 @@ class Graph:
             if x != y:
                 e = e + 1
                 result.append([u, v, w])
-                self.union(parent, rank, x, y)
+                self.union(parent, livel, x, y)
 
         minCost = 0
         print("Edges in the constructed MST")
